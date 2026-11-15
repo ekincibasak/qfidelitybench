@@ -1,0 +1,27 @@
+{
+  "figures/midpoint_results.png": {
+    "baseline": "60b4a81",
+    "source": "results/m2b/midpoint_results.png",
+    "sha256": "48e07e0a8c38997fae320d82502b530d8d238e573c36916fced053937e86b00a"
+  },
+  "figures/paired_risk_differences.png": {
+    "baseline": "60b4a81",
+    "source": "results/m2d_production_authorized/report/figures/paired_risk_differences.png",
+    "sha256": "891a886836408756b0b4e59224e423fe992413338c9dfde7aee599ae934424b7"
+  },
+  "figures/alpha_boundary.png": {
+    "baseline": "60b4a81",
+    "source": "results/m2d_production_authorized/report/figures/alpha_boundary.png",
+    "sha256": "e2e2b12ddb4c1694e526b140c6eb6c1b418688c9187d41761550158fb1a3852a"
+  },
+  "results/krr_statistics.json": {
+    "baseline": "60b4a81",
+    "source": "results/m2d_production_authorized/report/statistics.json",
+    "sha256": "575b68bb6118727ec98249ecd692de04a19a0238d3f3bc33a48501711ec15458"
+  },
+  "results/kernel_comparisons.csv": {
+    "baseline": "60b4a81",
+    "source": "results/m2b/comparisons.csv",
+    "sha256": "d9d0760dc6d2fc2fd54deaadb8daed93f1e027c1f5e4ffdeb6e07b704cfd2f88"
+  }
+}

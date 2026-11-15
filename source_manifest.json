@@ -1,0 +1,14 @@
+{
+  "vendor/m2b/core.py": {
+    "original": "prototype/m2b/core.py",
+    "sha256": "0e1506992b1a0a17a384522de3b5d136c3cf95212d98a804dbbca2b29d4ae0ac"
+  },
+  "vendor/fixed_midpoint.py": {
+    "original": "prototype/fixed_midpoint.py",
+    "sha256": "c376e9907f1b642a7b116cba4c37f99d8e910a8e06d9cebdc7f76d58c2bdd753"
+  },
+  "vendor/aer_two_order_pilot.py": {
+    "original": "prototype/aer_two_order_pilot.py",
+    "sha256": "a1b5d03d73e5a9593b9ad60142725f4fe9043bb23a44737bfeb362e5f0034d11"
+  }
+}

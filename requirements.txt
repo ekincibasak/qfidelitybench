@@ -1,0 +1,14 @@
+# Tested runtime distribution versions; no wheel hashes; Python 3.9.6/macOS arm64.
+numpy==2.0.2
+qiskit==2.2.3
+qiskit-aer==0.17.2
+scipy==1.13.1
+rustworkx==0.17.1
+dill==0.4.1
+stevedore==5.5.0
+typing_extensions==4.16.0
+psutil==7.2.2
+python-dateutil==3.0.0
+six==1.17.0
+
+tzdata==2026.6
