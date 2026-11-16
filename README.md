@@ -6,13 +6,17 @@
 
 A scientific research portfolio examining a practical question: **when does averaging forward and reverse quantum fidelity measurements improve kernel estimation, and does that improvement help prediction?**
 
-This repository preview contains a verified two-qubit demonstration, compact scientific results, mathematical definitions and selected figures. It is a research artifact, not a general-purpose benchmarking library.
+This publicly available repository contains a verified two-qubit demonstration, compact scientific results, mathematical definitions and selected figures. It is a research artifact, not a general-purpose benchmarking library.
+
+**Main finding: conditional kernel-estimation improvements did not translate into a statistically significant downstream KRR advantage after the planned Holm multiple-testing correction.** These conclusions come from distinct experiments: historical fixed-geometry kernel estimation and a frozen 12-dataset prediction study.
 
 ## Main findings
 
-- **Conditional kernel-estimation improvement.** In selected synthetic asymmetric coherent-noise models, paired measurements reduced average kernel error at equal total shots. For the historical midpoint +0.10-radian case at 1,024 shots, actual Aer runs gave paired/forward MSE ratio **0.5171**, with pointwise approximate 95% Monte Carlo interval **[0.5046, 0.5297]**. This summarizes 1,000 repetitions of a fixed 28-pair set, not independent datasets.
-- **No significant downstream KRR advantage.** The frozen experiment used 12 independent synthetic datasets, 100 shot repetitions per setting, four conditions and two shot budgets. None of 24 primary comparisons was significant after Holm correction, and none met the predefined practical-benefit criterion.
+- **Conditional kernel-estimation improvement.** In selected synthetic asymmetric coherent-noise models, paired measurements reduced average kernel error at equal total shots. For the historical midpoint +0.10-radian case at 1,024 shots, actual Aer runs gave paired/forward MSE ratio **0.5171**, with pointwise approximate 95% Monte Carlo interval **[0.5046, 0.5297]**. This is the historical fixed-geometry Aer experiment: 1,000 repetitions of a fixed 28-pair set. Its Monte Carlo interval is not an interval for the separate 12-dataset KRR production analysis.
+- **No significant downstream KRR advantage.** The frozen experiment used 12 independent synthetic datasets, 100 shot repetitions per setting, four conditions and two shot budgets. None of 24 primary comparisons was significant after the planned Holm correction, and none met the predefined practical-benefit criterion. Its inference averages repetitions within each dataset first (12 independent units, df=11).
 - **Equal shots are not equal execution cost.** Paired estimation uses two circuit executions, each with half the shots. Hardware latency and hardware advantage were not measured.
+
+The noiseless and depolarizing conditions are structural negative controls under the specified symmetric models: their expected forward/reverse probabilities agree, while independent finite-shot estimates can differ. See the [control assumptions](docs/METHODS.md#structural-negative-controls) and [CSV reading guide](docs/RESULTS.md#reading-resultskernel_comparisonscsv).
 
 These findings do not establish universal error mitigation, quantum advantage, algorithmic novelty or equivalence between estimators. Lower kernel error alone does not establish better predictions or PSD behavior.
 
@@ -49,14 +53,14 @@ The selected noisy repetition actually favors a fixed direction over paired. It 
 | `results/krr_statistics.json` | All 24 frozen comparisons, dataset means and shot variability |
 | `results/provenance.json` | Original artifact paths, baseline identifier and hashes |
 | `source_manifest.json` | Copied source provenance and hashes |
-| `MANIFEST.sha256` | Exact release-candidate file checksums, excluding itself |
+| `MANIFEST.sha256` | Public file checksums, excluding itself |
 
-The completed scientific baseline is `60b4a81`. This preview deliberately excludes the full production archive and historical Git objects. Replaying the example and inspecting aggregate evidence is supported; reproducing the entire production experiment from this compact candidate alone is not.
+The completed scientific baseline is `60b4a81`. This portfolio deliberately excludes the full production archive and historical Git objects. Replaying the example and inspecting aggregate evidence is supported; reproducing the entire production experiment from this compact portfolio alone is not.
 
 ## Scope and licensing
 
-The implemented scope is a fixed two-qubit research workflow. A reusable API, multi-qubit extension, hardware validation and external benchmark integration are not implemented here.
+The implemented scope is a fixed two-qubit research workflow. A reusable API, multi-qubit extension, hardware validation and external benchmark integration are not implemented here. A future reusable software package is separate from this completed two-qubit research demonstration.
 
 Başak Ekinci developed QFidelityBench as an independent research project with AI-assisted coding support. AI tools assisted with implementation, debugging, test preparation and documentation. This acknowledgement does not identify AI tools as project authors or imply independent scientific endorsement. The preserved tests and numerical checks document validation; AI assistance alone is not evidence of correctness.
 
-Copyright 2026 Başak Ekinci. QFidelityBench is licensed under the [Apache License, Version 2.0](LICENSE). This release candidate remains unpublished pending final publication approval. Dependency packages retain their own licenses. See [provenance and attribution](docs/PROVENANCE.md). No institutional affiliation or maintainer endorsement is asserted.
+Copyright 2026 Başak Ekinci. QFidelityBench is licensed under the [Apache License, Version 2.0](LICENSE). The research portfolio is publicly available at [github.com/ekincibasak/qfidelitybench](https://github.com/ekincibasak/qfidelitybench). Dependency packages retain their own licenses. See [provenance and attribution](docs/PROVENANCE.md). No institutional affiliation or maintainer endorsement is asserted.
