@@ -2,7 +2,7 @@
 
 ## Verified environment
 
-The compact portfolio was installed and tested in a **new isolated virtual environment**, without system site packages, on macOS14.6 arm64 / Python3.9.6. Installation downloaded dependencies independently of the research environment. `pip check`, `demo.py` and all three minimal tests passed. The runtime requirements include the transitive tzdata dependency discovered during resolution. Version pins are not cryptographic wheel hashes.
+The compact candidate was installed and tested in a **new isolated virtual environment**, without system site packages, on macOS14.6 arm64 / Python3.9.6. Installation downloaded dependencies independently of the research environment. `pip check`, `demo.py` and all three minimal tests passed. The runtime requirements include the transitive tzdata dependency discovered during resolution. Version pins are not cryptographic wheel hashes.
 
 The historical research tests also passed (102 tests) in the preserved research environment; those broader tests and the full production archive are deliberately not included here. The research environment was not upgraded.
 
@@ -28,4 +28,4 @@ Included: two index-selected archived cases, necessary verified source copies, a
 
 Not included: production runners, full38,828-file result directory, original1000-repeat measurement arrays, historical Git objects, hardware credentials or local virtual environments. Thus the full production experiment cannot be rerun from this compact portfolio alone. Parent hashes support provenance checks when the complete research archive is separately available; they are not a replacement for that archive.
 
-`MANIFEST.sha256` lists every intended public file except itself. It can be checked on macOS using `shasum -a 256 -c MANIFEST.sha256`. A private inventory including that manifest is maintained separately for release bookkeeping; no internal audit document is included in the public repository.
+`MANIFEST.sha256` lists every intended public file except itself. It can be checked on macOS using `shasum -a 256 -c MANIFEST.sha256`. The exact file inventory including that manifest is retained separately for approval, not as an internal audit document inside the public repository.
