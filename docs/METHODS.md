@@ -23,20 +23,6 @@ Let a=(p_f-p_r)/2, b=(p_f+p_r)/2-K, q_f=p_f(1-p_f) and q_r=p_r(1-p_r). The paire
 
 For isolated midpoint ZZ, a is odd in theta and b is even. That model-specific cancellation must not be assumed for arbitrary interleaved channels. The saved first repetition is illustrative; the historical studies estimate repeat-averaged errors across a fixed pair set.
 
-## Structural negative controls
-
-The frozen design includes two asymmetric coherent-noise conditions (midpoint and local-ZZ) and two structural negative controls (noiseless and depolarizing). The controls test direction-dependent effects under specific model assumptions; they are not general statements about devices or all depolarizing implementations.
-
-**Noiseless:** theta=0, an empty noise model, exact inverse feature-map circuits and ideal state preparation/measurement imply p_f=p_r=K. There is no population directional asymmetry for paired estimation to cancel.
-
-**Depolarizing:** theta=0 and the same full two-qubit channel D(rho)=lambda*rho+(1-lambda)*I4/4, with lambda=0.99, follow each of exactly four CX gates in both directions. This isotropic channel acts on the entire two-qubit system and commutes with any unitary conjugation. With no other noise or readout error, the four channels therefore give
-
-p_f = p_r = lambda^4*K + (1-lambda^4)/4.
-
-This equality relies on equal noise strength and channel count in both directions. It need not hold for subsystem-local noise in a larger system, direction-dependent compilation, additional coherent/nonunital errors or asymmetric preparation/readout. The formula concerns measured pair probabilities; the imposed training diagonal of1 is a separate zero-shot convention, not an observed noisy diagonal probability.
-
-**Expected equality versus sampled equality:** when p_f=p_r=p, each arm has mean p and, under independent Bernoulli shots, variance p(1-p)/S. The paired sum of two independent Binomial(S/2,p) counts has the same Binomial(S,p) distribution as a fixed direction. The random-direction mixture has that distribution too. However, arms use independent count streams: their realized counts, kernel errors and KRR predictions need not match. Finite-sample ratios can lie above or below1; isolated differences in a control are not evidence of systematic superiority. In the depolarizing control, all arms also share the same bias relative to ideal K.
-
 ## Frozen downstream experiment
 
 Twelve datasets use seeds101–112. Each has 48 independent synthetic two-dimensional uniform[-1,1] inputs, split 24 train / 12 validation / 12 test. The raw target is sin(2pi*x0)+0.3cos(3pi*x1). Training-only mean and population standard deviation standardize inputs. Angles are [pi*z0, pi*z1, pi*(z0+z1)/2, pi*(z0-z1)/2]. Targets are not centered or scaled.
@@ -49,4 +35,4 @@ KRR solves (K_train + alpha*I)w = y_train and predicts K_cross*w. Alpha is exact
 
 Average 100 shot repetitions within each dataset before comparing paired with forward, reverse and random. This gives 12 independent differences per contrast, not1,200 independent datasets. The 3 controls × 4 conditions × 2 budgets form one family of24 paired two-sided t tests (df=11), Holm FWER0.05, with pointwise95% t confidence intervals. Practical benefit additionally requires at least5% reduction in the ratio of dataset-averaged grand-mean risks against all three controls within a condition/budget. Degenerate and failed results follow the frozen explicit policies.
 
-Production's 20,938,752,000 NumPy-modeled shots are distinct from the 120 finite-shot Aer anchor executions /61,440 actual simulator shots. Exact simulator probability checks are another diagnostic category. None is a hardware execution claim. The compact portfolio contains aggregate production evidence, not its full raw archive or production runner.
+Production's 20,938,752,000 NumPy-modeled shots are distinct from the 120 finite-shot Aer anchor executions /61,440 actual simulator shots. Exact simulator probability checks are another diagnostic category. None is a hardware execution claim. The compact preview contains aggregate production evidence, not its full raw archive or production runner.
