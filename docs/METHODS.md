@@ -8,7 +8,7 @@ K_ij = |<psi_j|psi_i>|² = Tr(rho_i rho_j).
 
 Forward prepares i, applies the prescribed midpoint W, and uncomputes j. Reverse exchanges i and j while retaining the same midpoint sign. In the isolated coherent model W = exp(-i theta ZZ/2), p_f = |<psi_j|W|psi_i>|². For general channels, probabilities come from density-matrix evolution, not that coherent formula.
 
-The fixed compiled schedule has six RY, seven RZ, four CX, two barriers and two measurements; basis ry/rz/cx, optimization zero, transpiler seed21 and identity wiring. Even theta=0 retains the midpoint CX–RZ–CX schedule. The noiseless condition has theta=0 and no noise channels. The demonstration uses only noiseless and theta=+0.10 midpoint cases.
+The fixed compiled schedule has six RY, seven RZ, four CX, two barriers and two measurements; basis ry/rz/cx, optimization zero, transpiler seed 21 and identity wiring. Even theta=0 retains the midpoint CX–RZ–CX schedule. The noiseless condition has theta=0 and no noise channels. The demonstration uses only noiseless and theta=+0.10 midpoint cases.
 
 The production conditions were noiseless; midpoint +0.10; local ZZ +0.03 after each CX; and two-qubit depolarizing rho -> 0.99rho+0.01I/4 after each CX. No readout noise was included in production. These are synthetic models, not calibrated hardware channels. The wider historical comparison CSV includes other explicitly labelled controls; do not conflate them with the production condition set.
 
@@ -23,16 +23,30 @@ Let a=(p_f-p_r)/2, b=(p_f+p_r)/2-K, q_f=p_f(1-p_f) and q_r=p_r(1-p_r). The paire
 
 For isolated midpoint ZZ, a is odd in theta and b is even. That model-specific cancellation must not be assumed for arbitrary interleaved channels. The saved first repetition is illustrative; the historical studies estimate repeat-averaged errors across a fixed pair set.
 
+## Structural negative controls
+
+The frozen design includes two asymmetric coherent-noise conditions (midpoint and local-ZZ) and two structural negative controls (noiseless and depolarizing). The controls test direction-dependent effects under specific model assumptions; they are not general statements about devices or all depolarizing implementations.
+
+**Noiseless:** theta=0, an empty noise model, exact inverse feature-map circuits and ideal state preparation/measurement imply p_f=p_r=K. There is no population directional asymmetry for paired estimation to cancel.
+
+**Depolarizing:** theta=0 and the same full two-qubit channel D(rho)=lambda*rho+(1-lambda)*I4/4, with lambda=0.99, follow each of exactly four CX gates in both directions. This isotropic channel acts on the entire two-qubit system and commutes with any unitary conjugation. With no other noise or readout error, the four channels therefore give
+
+p_f = p_r = lambda^4*K + (1-lambda^4)/4.
+
+This equality relies on equal noise strength and channel count in both directions. It need not hold for subsystem-local noise in a larger system, direction-dependent compilation, additional coherent/nonunital errors or asymmetric preparation/readout. The formula concerns measured pair probabilities; the imposed training diagonal of 1 is a separate zero-shot convention, not an observed noisy diagonal probability.
+
+**Expected equality versus sampled equality:** when p_f=p_r=p, each arm has mean p and, under independent Bernoulli shots, variance p(1-p)/S. The paired sum of two independent Binomial(S/2,p) counts has the same Binomial(S,p) distribution as a fixed direction. The random-direction mixture has that distribution too. However, arms use independent count streams: their realized counts, kernel errors and KRR predictions need not match. Finite-sample ratios can lie above or below 1; isolated differences in a control are not evidence of systematic superiority. In the depolarizing control, all arms also share the same bias relative to ideal K.
+
 ## Frozen downstream experiment
 
-Twelve datasets use seeds101–112. Each has 48 independent synthetic two-dimensional uniform[-1,1] inputs, split 24 train / 12 validation / 12 test. The raw target is sin(2pi*x0)+0.3cos(3pi*x1). Training-only mean and population standard deviation standardize inputs. Angles are [pi*z0, pi*z1, pi*(z0+z1)/2, pi*(z0-z1)/2]. Targets are not centered or scaled.
+Twelve datasets use seeds 101–112. Each has 48 independent synthetic two-dimensional uniform[-1,1] inputs, split 24 train / 12 validation / 12 test. The raw target is sin(2pi*x0)+0.3cos(3pi*x1). Training-only mean and population standard deviation standardize inputs. Angles are [pi*z0, pi*z1, pi*(z0+z1)/2, pi*(z0-z1)/2]. Targets are not centered or scaled.
 
-Training off-diagonal pairs are sampled once per arm and mirrored, with diagonal fixed to1 at zero shots. Cross-kernel rows are held-out observations and columns are training observations. Forward always prepares the training input and uncomputes the held-out input. Each dataset has 276 training and 576 cross pairs, total852. Budgets are S=256 and1024, with 100 shot repetitions per condition/budget.
+Training off-diagonal pairs are sampled once per arm and mirrored, with diagonal fixed to 1 at zero shots. Cross-kernel rows are held-out observations and columns are training observations. Forward always prepares the training input and uncomputes the held-out input. Each dataset has 276 training and 576 cross pairs, total 852. Budgets are S=256 and 1024, with 100 shot repetitions per condition/budget.
 
 KRR solves (K_train + alpha*I)w = y_train and predicts K_cross*w. Alpha is exactly {0.01,0.1,1,10}; there is no hidden sample-count multiplier, intercept, PSD repair, adaptive jitter or validation refit. Validation MSE selects alpha; exact ties choose the smaller alpha. Linear, RBF and ideal fidelity references use the same splits. RBF bandwidths use training-only distances. Candidates fail for condition number >1e12, nonfinite solution, solver error or normalized residual >1e-10. All-candidate failure blocks primary aggregate reporting; it is not silently removed.
 
 ## Statistical inference and costs
 
-Average 100 shot repetitions within each dataset before comparing paired with forward, reverse and random. This gives 12 independent differences per contrast, not1,200 independent datasets. The 3 controls × 4 conditions × 2 budgets form one family of24 paired two-sided t tests (df=11), Holm FWER0.05, with pointwise95% t confidence intervals. Practical benefit additionally requires at least5% reduction in the ratio of dataset-averaged grand-mean risks against all three controls within a condition/budget. Degenerate and failed results follow the frozen explicit policies.
+Average 100 shot repetitions within each dataset before comparing paired with forward, reverse and random. This gives 12 independent differences per contrast, not 1,200 independent datasets. The 3 controls × 4 conditions × 2 budgets form one family of 24 paired two-sided t tests (df=11), Holm FWER 0.05, with pointwise 95% t confidence intervals. Practical benefit additionally requires at least 5% reduction in the ratio of dataset-averaged grand-mean risks against all three controls within a condition/budget. Degenerate and failed results follow the frozen explicit policies.
 
-Production's 20,938,752,000 NumPy-modeled shots are distinct from the 120 finite-shot Aer anchor executions /61,440 actual simulator shots. Exact simulator probability checks are another diagnostic category. None is a hardware execution claim. The compact preview contains aggregate production evidence, not its full raw archive or production runner.
+Production's 20,938,752,000 NumPy-modeled shots are distinct from the 120 finite-shot Aer anchor executions / 61,440 actual simulator shots. Exact simulator probability checks are another diagnostic category. None is a hardware execution claim. The compact portfolio contains aggregate production evidence, not its full raw archive or production runner.
